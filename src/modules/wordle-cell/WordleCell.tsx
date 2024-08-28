@@ -1,8 +1,9 @@
+import { GuessStatus } from '../../shared/constants';
 import { Cell } from './WordleCell.styles';
 
 interface WordleCellProps {
   letter: string;
-  status: 'correct' | 'present' | 'absent' | null;
+  status: GuessStatus | null;
 }
 
 const WordleCell = ({ letter, status }: WordleCellProps) => {

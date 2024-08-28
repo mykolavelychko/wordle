@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { GuessStatus } from "../../shared/constants";
 
 const color = {
   correct: "#538D4E",
@@ -8,7 +9,7 @@ const color = {
 };
 
 export const Cell = styled.div<{
-  status: "correct" | "present" | "absent" | null;
+  status: GuessStatus | null;
 }>`
   width: 60px;
   height: 60px;

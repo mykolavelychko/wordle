@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { WordleContext } from "./wordle/Wordle.context";
 import WordleRow from "./WordleRow";
-import { GRID_SIZE } from "../shared/constants";
+import { GRID_SIZE, GuessStatus } from "../shared/constants";
+import GameOverModal from "./game-over-dialog/GameOverDialog";
 
 interface WordleGridProps {
   onEnter: (guess: string) => void;
@@ -12,11 +13,13 @@ const WordleGrid = ({ onEnter }: WordleGridProps) => {
   if (!context) {
     throw new Error("WordleGrid must be used within a WordleProvider");
   }
-  const { word, guesses, setGuesses } = context;
+  const { word, guesses, setGuesses, getWord } = context;
   const wordArray = word?.split("") || [];
 
   const [currentGuess, setCurrentGuess] = useState<string>("");
   const [results, setResults] = useState<string[][]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isWinner, setIsWinner] = useState<boolean>(false);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -39,13 +42,14 @@ const WordleGrid = ({ onEnter }: WordleGridProps) => {
   }, [currentGuess, onEnter]);
 
   const validateGuess = (guess: string) => {
-    const result = Array(5).fill("absent");
+    // TODO: check if the guess is an existing word
+    const result = Array(5).fill(GuessStatus.Absent);
     const guessArray = guess.split("");
     const letterCount: { [key: string]: number } = {};
 
     guessArray.forEach((letter, index) => {
       if (letter === wordArray[index]) {
-        result[index] = "correct";
+        result[index] = GuessStatus.Correct;
         wordArray[index] = "";
       } else {
         letterCount[wordArray[index]] =
@@ -53,14 +57,37 @@ const WordleGrid = ({ onEnter }: WordleGridProps) => {
       }
     });
 
+    if (result.every((r) => r === GuessStatus.Correct)) {
+      setIsWinner(true);
+      setIsModalOpen(true);
+    }
+
     guessArray.forEach((letter, index) => {
-      if (result[index] !== "correct" && letterCount[letter]) {
-        result[index] = "present";
+      if (result[index] !== GuessStatus.Correct && letterCount[letter]) {
+        result[index] = GuessStatus.Present;
         letterCount[letter]--;
       }
     });
 
+    if (results.length === GRID_SIZE - 1) {
+      setIsWinner(false);
+      setIsModalOpen(true);
+    }
+
     return result;
+  };
+
+  const resetGame = () => {
+    setGuesses([]);
+    setResults([]);
+    setCurrentGuess("");
+    setIsWinner(false);
+    getWord();
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    resetGame();
   };
 
   const rows = Array(GRID_SIZE)
@@ -76,7 +103,16 @@ const WordleGrid = ({ onEnter }: WordleGridProps) => {
       return <WordleRow key={rowIndex} guess={guess} result={result} />;
     });
 
-  return <div className="wordle-grid">{rows}</div>;
+  return (
+    <>
+      <div className="wordle-grid">{rows}</div>
+      <GameOverModal
+        isOpen={isModalOpen}
+        isWinner={isWinner}
+        onClose={closeModal}
+      />
+    </>
+  );
 };
 
 export default WordleGrid;

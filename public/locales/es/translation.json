@@ -1,3 +1,8 @@
 {
-  "welcome": "Bienvenido a Wordle"
+  "welcome": "Bienvenido a Wordle",
+  "gameOver.win.title": "¡Eres un ganador, campeón!",
+  "gameOver.lose.title": "¡Vaya! Mala suerte, pero no te rindas!",
+  "gameOver.win.message": "¡Felicidades! Acabas de aplastarlo y ganar el juego. Ahora, disfruta de tu gloria y celebra como un jefe! 🎉",
+  "gameOver.lose.message": "No lo lograste esta vez, pero oye, ¡no te preocupes! Inténtalo de nuevo, y quién sabe, ¡la próxima ronda podría ser tu momento de gloria! ¡Sigue adelante, campeón! 💪🎮",
+  "gameOver.tryAgain": "Inténtalo de nuevo"
 }
