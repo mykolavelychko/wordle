@@ -8,14 +8,14 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-	fallbackLng: 'en',
-	debug: true,
-	interpolation: {
-	  escapeValue: false, // React already does escaping
-	},
-	backend: {
-	  loadPath: '/locales/{{lng}}/{{ns}}.json',
-	},
+    fallbackLng: 'en',
+    debug: true,
+    interpolation: {
+      escapeValue: false, // React already does escaping
+    },
+    backend: {
+      loadPath: '/locales/{{lng}}/{{ns}}.json',
+    },
   });
 
 export default i18n;
