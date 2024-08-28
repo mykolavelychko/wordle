@@ -1,5 +1,5 @@
 import { WordleProvider } from "./Wordle.context";
-import WordleGrid from "../WordleGrid";
+import WordleGrid from "../wordle-grid/WordleGrid";
 // import Keyboard from '../Keyboard';
 
 const Wordle = () => {

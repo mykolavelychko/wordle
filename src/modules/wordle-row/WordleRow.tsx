@@ -1,5 +1,6 @@
-import { GRID_SIZE } from "../shared/constants";
-import WordleCell from "./wordle-cell/WordleCell";
+import { GRID_SIZE } from "../../shared/constants";
+import WordleCell from "../wordle-cell/WordleCell";
+import { WordleRowContainer } from "./WordleRow.styles";
 
 interface WordleRowProps {
   guess: string;
@@ -17,7 +18,7 @@ const WordleRow = ({ guess, result }: WordleRowProps) => {
       />
     ));
 
-  return <div className="wordle-row">{cells}</div>;
+  return <WordleRowContainer>{cells}</WordleRowContainer>;
 };
 
 export default WordleRow;

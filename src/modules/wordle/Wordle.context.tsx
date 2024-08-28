@@ -1,5 +1,6 @@
 import React, { createContext, useState, ReactNode, useEffect } from "react";
 import axios from "axios";
+import { GRID_SIZE } from "../../shared/constants";
 
 interface WordleContextProps {
   word: string | null;
@@ -17,7 +18,7 @@ const WordleProvider = ({ children }: { children: ReactNode }) => {
   const getWord = () => {
     try {
       axios
-        .get("https://random-word-api.herokuapp.com/word?length=5")
+        .get(`https://random-word-api.herokuapp.com/word?length=${GRID_SIZE}`)
         .then((response) => setWord(response.data[0].toUpperCase()));
     } catch (error) {
       console.error("Error fetching the word:", error);

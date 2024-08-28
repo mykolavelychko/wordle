@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { WordleContext } from "./wordle/Wordle.context";
-import WordleRow from "./WordleRow";
-import { GRID_SIZE, GuessStatus } from "../shared/constants";
-import GameOverModal from "./game-over-dialog/GameOverDialog";
+import { WordleContext } from "../wordle/Wordle.context";
+import WordleRow from "../wordle-row/WordleRow";
+import { GRID_SIZE, GuessStatus } from "../../shared/constants";
+import GameOverModal from "../game-over-dialog/GameOverDialog";
+import { WordleGridContainer } from "./WordleGrid.styles";
 
 interface WordleGridProps {
   onEnter: (guess: string) => void;
@@ -105,7 +106,7 @@ const WordleGrid = ({ onEnter }: WordleGridProps) => {
 
   return (
     <>
-      <div className="wordle-grid">{rows}</div>
+      <WordleGridContainer>{rows}</WordleGridContainer>
       <GameOverModal
         isOpen={isModalOpen}
         isWinner={isWinner}

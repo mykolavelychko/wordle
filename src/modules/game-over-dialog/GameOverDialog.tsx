@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
-import "./GameOverDialog.styles.css";
+import "./GameOverDialog.css";
 import { useTranslation } from "react-i18next";
 
 // FIXME:

@@ -14,11 +14,13 @@ export const Cell = styled.div<{
   width: 60px;
   height: 60px;
   display: inline-block;
-  border: 1px solid #ccc;
+  border: ${({ status }) => `2px solid ${status ? color.none : color.absent}`};
+  border-radius: 4px;
   text-align: center;
   line-height: 60px;
   font-size: 32px;
   font-family: "Inter", sans-serif;
+  font-weight: 700;
   margin: 2px;
   background-color: ${({ status }) =>
     status

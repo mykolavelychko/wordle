@@ -1,0 +1,20 @@
+.locale-switcher {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.locale-switcher:hover {
+  border-color: #888;
+}
+
+.locale-switcher:focus {
+  border-color: #555;
+  box-shadow: 0 0 5px rgba(85, 85, 85, 0.5);
+}

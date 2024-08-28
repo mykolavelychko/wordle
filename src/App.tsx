@@ -1,6 +1,6 @@
 import "./App.css";
 import { useTranslation } from "react-i18next";
-import LocaleSwitcher from "./modules/LocaleSwitcher";
+import LocaleSwitcher from "./modules/locale-switcher/LocaleSwitcher";
 import Wordle from "./modules/wordle/Wordle";
 
 function App() {
@@ -9,12 +9,13 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1>{t("welcome")}</h1>
-        <LocaleSwitcher />
       </header>
       <main>
         <Wordle />
       </main>
+      <footer>
+        <LocaleSwitcher />
+      </footer>
     </div>
   );
 }

@@ -7,80 +7,18 @@ html, body {
 .App {
   width: 100%;
   height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
   text-align: center;
   background: linear-gradient(#212226, #000000);
 }
 
-.App-header {
-  background-color: #282c34;
-  padding: 20px;
-  color: white;
-}
-
-.wordle-grid {
-  display: grid;
-  grid-template-rows: repeat(6, 1fr);
-  gap: 10px;
-  margin: 20px auto;
-  max-width: 350px;
-}
-
-.wordle-row {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 5px;
-}
-
-.wordle-cell {
-  width: 60px;
-  height: 60px;
-  border: 2px solid #d3d6da;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  background-color: #ffffff;
-  text-transform: uppercase;
-  font-weight: bold;
-  color: #000000;
-}
-
-.wordle-cell.correct {
-  background-color: #6aaa64;
-  border-color: #6aaa64;
-  color: #ffffff;
-}
-
-.wordle-cell.present {
-  background-color: #c9b458;
-  border-color: #c9b458;
-  color: #ffffff;
-}
-
-.wordle-cell.absent {
-  background-color: #787c7e;
-  border-color: #787c7e;
-  color: #ffffff;
-}
-
-.keyboard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.keyboard-row {
-  display: flex;
-  gap: 5px;
-  margin-bottom: 10px;
-}
-
-.keyboard-key {
-  width: 40px;
-  height: 40px;
-  border: 1px solid #ccc;
-  background-color: #f0f0f0;
-  font-size: 18px;
-  cursor: pointer;
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 40px 0;
+  color: #fff;
+  text-align: center;
 }
