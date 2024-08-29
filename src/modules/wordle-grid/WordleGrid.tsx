@@ -4,6 +4,7 @@ import WordleRow from "../wordle-row/WordleRow";
 import { GRID_SIZE, GuessStatus } from "../../shared/constants";
 import GameOverModal from "../game-over-dialog/GameOverDialog";
 import { WordleGridContainer } from "./WordleGrid.styles";
+import axios from "axios";
 
 interface WordleGridProps {
   onEnter: (guess: string) => void;
@@ -23,9 +24,12 @@ const WordleGrid = ({ onEnter }: WordleGridProps) => {
   const [isWinner, setIsWinner] = useState<boolean>(false);
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
+    const handleKeyDown = async (event: KeyboardEvent) => {
       if (event.key === "Enter") {
         if (currentGuess.length === GRID_SIZE) {
+          if (!(await isValidWord(currentGuess))) {
+            return;
+          }
           const result = validateGuess(currentGuess);
           setResults([...results, result]);
           setGuesses([...guesses, currentGuess]);
@@ -42,8 +46,19 @@ const WordleGrid = ({ onEnter }: WordleGridProps) => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [currentGuess, onEnter]);
 
+  const isValidWord = async (word: string): Promise<boolean> => {
+    try {
+      const response = await axios.get(
+        `https://api.dictionaryapi.dev/api/v2/entries/en/${word.toLowerCase()}`
+      );
+      return response.data.length > 0;
+    } catch (error) {
+      console.error("Error checking word validity:", error);
+      return false;
+    }
+  };
+
   const validateGuess = (guess: string) => {
-    // TODO: check if the guess is an existing word
     const result = Array(5).fill(GuessStatus.Absent);
     const guessArray = guess.split("");
     const letterCount: { [key: string]: number } = {};
@@ -58,11 +73,6 @@ const WordleGrid = ({ onEnter }: WordleGridProps) => {
       }
     });
 
-    if (result.every((r) => r === GuessStatus.Correct)) {
-      setIsWinner(true);
-      setIsModalOpen(true);
-    }
-
     guessArray.forEach((letter, index) => {
       if (result[index] !== GuessStatus.Correct && letterCount[letter]) {
         result[index] = GuessStatus.Present;
@@ -70,7 +80,10 @@ const WordleGrid = ({ onEnter }: WordleGridProps) => {
       }
     });
 
-    if (results.length === GRID_SIZE - 1) {
+    if (result.every((r) => r === GuessStatus.Correct)) {
+      setIsWinner(true);
+      setIsModalOpen(true);
+    } else if (results.length === GRID_SIZE - 1) {
       setIsWinner(false);
       setIsModalOpen(true);
     }
