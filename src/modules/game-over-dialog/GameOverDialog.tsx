@@ -1,7 +1,14 @@
 import React from "react";
-import Modal from "react-modal";
-import "./GameOverDialog.css";
 import { useTranslation } from "react-i18next";
+import Modal from "react-modal";
+
+import {
+  GameOverButton,
+  GameOverImage,
+  GameOverMessage,
+  GameOverTitle,
+  StyledModal,
+} from "./GameOverDialog.styles";
 
 // Set the app element for a11y to avoid the warning regarding the screen reader sees the content behind the modal when it's open
 Modal.setAppElement("#root");
@@ -21,32 +28,35 @@ const GameOverModal: React.FC<GameOverModalProps> = ({
   const gameResult = isWinner ? "win" : "lose";
 
   return (
-    <Modal
+    <StyledModal
       isOpen={isOpen}
       onRequestClose={onClose}
       shouldFocusAfterRender={false}
       contentLabel="Game Over"
       className="game-over-modal"
-      overlayClassName="game-over-overlay"
       role="dialog"
       aria-labelledby="game-over-title"
       aria-describedby="game-over-message"
     >
-      <img
+      <GameOverImage
         src={`${gameResult}.svg`}
         alt="Game Over"
         className="game-over-image"
       />
-      <h2 id="game-over-title">{t(`gameOver.${gameResult}.title`)}</h2>
-      <p id="game-over-message">{t(`gameOver.${gameResult}.message`)}</p>
-      <button
+      <GameOverTitle id="game-over-title">
+        {t(`gameOver.${gameResult}.title`)}
+      </GameOverTitle>
+      <GameOverMessage id="game-over-message">
+        {t(`gameOver.${gameResult}.message`)}
+      </GameOverMessage>
+      <GameOverButton
         onClick={onClose}
         aria-label={t("gameOver.tryAgain")}
         tabIndex={0}
       >
         {t("gameOver.tryAgain")}
-      </button>
-    </Modal>
+      </GameOverButton>
+    </StyledModal>
   );
 };
 

@@ -5,5 +5,5 @@ export const WordleGridContainer = styled.div`
   grid-template-rows: repeat(5, 1fr);
   gap: 10px;
   margin: 20% auto;
-  max-width: 390px;
+  max-width: 380px;
 `;
