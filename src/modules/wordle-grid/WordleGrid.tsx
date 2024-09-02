@@ -22,12 +22,14 @@ const WordleGrid = ({ onEnter }: WordleGridProps) => {
   const [results, setResults] = useState<string[][]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isWinner, setIsWinner] = useState<boolean>(false);
+  const [isNonexistentWord, setIsNonexistentWord] = useState<boolean>(false);
 
   useEffect(() => {
     const handleKeyDown = async (event: KeyboardEvent) => {
       if (event.key === "Enter") {
         if (currentGuess.length === GRID_SIZE) {
           if (!(await isValidWord(currentGuess))) {
+            setIsNonexistentWord(true);
             return;
           }
           const result = validateGuess(currentGuess);
@@ -37,6 +39,7 @@ const WordleGrid = ({ onEnter }: WordleGridProps) => {
         }
       } else if (event.key === "Backspace") {
         setCurrentGuess(currentGuess.slice(0, -1));
+        setIsNonexistentWord(false);
       } else if (/^[a-zA-Z]$/.test(event.key) && currentGuess.length < 5) {
         setCurrentGuess(currentGuess + event.key.toUpperCase());
       }
@@ -113,7 +116,13 @@ const WordleGrid = ({ onEnter }: WordleGridProps) => {
           : rowIndex === guesses.length
           ? currentGuess
           : "";
-      const result = rowIndex < results.length ? results[rowIndex] : [];
+
+      const result =
+        rowIndex < results.length
+          ? results[rowIndex]
+          : currentGuess && guess === currentGuess && isNonexistentWord
+          ? Array(GRID_SIZE).fill(GuessStatus.Wrong)
+          : [];
       return <WordleRow key={rowIndex} guess={guess} result={result} />;
     });
 

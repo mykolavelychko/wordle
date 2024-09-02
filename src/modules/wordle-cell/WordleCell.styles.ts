@@ -5,6 +5,7 @@ const color = {
   correct: "#538D4E",
   present: "#BEA11F",
   absent: "#3A3A3C",
+  wrong: "#BF5747",
   none: "transparent",
 };
 
@@ -24,10 +25,11 @@ export const Cell = styled.div<{
   margin: 2px;
   background-color: ${({ status }) =>
     status
-      ? status === "correct"
+      ? status === GuessStatus.Correct
         ? color.correct
-        : status === "present"
+        : status === GuessStatus.Present
         ? color.present
+        : status === GuessStatus.Wrong ? color.wrong
         : color.absent
       : color.none};
   color: white;

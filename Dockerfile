@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base image
-FROM node:16-alpine
+FROM node:alpine
 
 # Set the working directory
 WORKDIR /app
@@ -10,6 +10,9 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
+# Install serve globally
+RUN npm install -g serve
+
 # Copy the rest of the application code
 COPY . .
 
@@ -17,7 +20,7 @@ COPY . .
 RUN npm run build
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE 5000
 
 # Command to run the application
-CMD ["serve", "-s", "dist", "-l", "5000"]
+CMD ["serve", "-s", "build", "-l", "5000"]
